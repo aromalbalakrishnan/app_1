@@ -24,8 +24,11 @@ const Signin = ({ navigation }) => {
 		const data = await response.json()
 
 		if (data.status === 'ok') {
-			history.push('/login.js')
+			// history.push('/login')
 		}
+    else{
+      alert(data.error)
+    }
   };
 
   return (

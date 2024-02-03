@@ -26,7 +26,7 @@ const bcrypt = require('bcryptjs')
     });
 
     app.post('/api/register', async (req, res) => {
-        console.log(req.body)
+        // console.log(req.body)
         try {
             const newPassword = await bcrypt.hash(req.body.password, 10)
             await User.create({
@@ -36,14 +36,14 @@ const bcrypt = require('bcryptjs')
             })
             res.json({ status: 'ok' })
         } catch (err) {
-            res.json({ status: 'error', error: 'Duplicate email' })
+            res.json({ status: 'error', error: 'Email already registered' })
         }
     })
 
     
 app.post('/api/login', async (req, res) => {
 	const user = await User.findOne({
-		email: req.body.email,
+		email: req.body.name,
 	})
 
 	if (!user) {
@@ -66,7 +66,7 @@ app.post('/api/login', async (req, res) => {
 
 		return res.json({ status: 'ok', user: token })
 	} else {
-		return res.json({ status: 'error', user: false })
+		return res.json({ status: 'error', user: false, message: 'Invalid Username/ Password' })
 	}
 })
 

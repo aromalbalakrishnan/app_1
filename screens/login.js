@@ -5,8 +5,30 @@ const Login = ({ navigation }) => {
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
 
-  const registerUser = async () => {
-    // Your registerUser function implementation here
+  const registerUser = async (event) => {
+    event.preventDefault()
+
+		const response = await fetch('http://localhost:1234/api/login', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+				name,
+				password,
+			}),
+		})
+
+		const data = await response.json()
+    // navigation.navigate('Home')
+		if (data.status === 'ok') {
+			// history.push('/login.js')
+      console.log('Login Success');
+      navigation.navigate('Home')
+		}
+    else{
+      alert(data.message)
+    }
   };
 
   return (
